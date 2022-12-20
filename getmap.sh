@@ -6,12 +6,10 @@
 #		 [Res]  Map resolution: 1-8
 #		[Type]  Map image type: sat, top
 
-
 RES=$1
 TYP=$2
 
 printf "Downloading $TYP map at ${RES}x resolution.\n"
-
 
 if [ $RES == 1 ]; then
 	SIZE=1
@@ -31,9 +29,11 @@ elif [ $RES == 8 ]; then
 	SIZE=255
 	printf "Warning! You have selected 8x resolution- This will create a FOUR GIGAPIXEL (65000x65000px) image. This will take a while!\n"
 else
-	printf "Please specify a valid resolution (1-8) ( ex: ./getmap 4 sat )"
+	printf "Please specify a valid resolution (1-8) ( ex: ./getmap 4 sat )\n"
 	exit;
 fi
+
+
 
 
 printf "Setting up...\n"
@@ -46,8 +46,9 @@ ulimit -n 2048
 touch TilesToDownload.txt
 truncate -s 0 TilesToDownload.txt
 
-
 TOT=$((SIZE+1))
+
+
 
 
 printf "Generating download list...\n"
@@ -73,7 +74,7 @@ do
 			echo https://maps.izurvive.com/maps/ChernarusPlus-Sat/1.19.0/tiles/"$RES"/"$x"/"$y".jpg >> TilesToDownload.txt
 			echo "	out=${yFileName}_${xFileName}.jpg" >> TilesToDownload.txt
 		else
-			printf "Please specify satellite / topographic (sat/top) ( ex: ./getmap 4 sat )"
+			printf "Please specify satellite / topographic (sat/top) ( ex: ./getmap 4 sat )\n"
 			exit;
 		fi
 	
@@ -103,14 +104,11 @@ do
 	
 done
 
-printf "Done.\n Initiating download (this may take a while)\n"
 
+
+printf "Done.\nInitiating download (this may take a while)\n"
 
 aria2c --dir=./tmp --input-file=TilesToDownload.txt --max-tries=0 --retry-wait=3 --timeout=5 --max-concurrent-downloads=400 --connect-timeout=60 --max-connection-per-server=16 --split=16 --min-split-size=1M --download-result=full --file-allocation=none
-
-
-printf "Downloads complete!\n"
-
 
 # max-concurrent-downloads (getmap 7 sat) speed tests:
 # 300: 1:13
@@ -118,9 +116,12 @@ printf "Downloads complete!\n"
 # 600: 1:11
 # 800: Errors
 
+printf "Downloads complete!\n"
+
 rm TilesToDownload.txt
 
 cd tmp
+
 
 
 # If resolution is 8, saving each tile at 256x256 resolution will cause an error when we concatenate, as the max JPG size is 65500. 
@@ -137,6 +138,9 @@ printf "Generating map from tiles. This may take a while.\n"
 montage -monitor -mode concatenate *_*.jpg -tile "${TOT}x${TOT}" "${TOT}x${TOT}_${2}.jpg"
 
 printf "Map generation complete! Opening image (saved in maps folder)\n"
+
+
+
 
 mv "${TOT}x${TOT}_${2}.jpg" ../maps
 
