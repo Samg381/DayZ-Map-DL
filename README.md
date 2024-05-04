@@ -9,11 +9,13 @@ Downloads the latest Chernarus+ Map from iZurvive. Choose between resolution inc
 
 # Usage
 
-`./getmap [Res] [Type]`
+`./getmap [Res] [Type] [Version]`
 
 [Res]  Map resolution: 1-8
 
 [Type] Map image type: sat (satellite), top (topographic)
+
+[Version] Desired DayZ map version (must be exact, e.g. 1.19.0)
 
 # Warning
 
