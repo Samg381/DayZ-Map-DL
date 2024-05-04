@@ -5,7 +5,7 @@
 # Usage: ./getmap [Res] [Type] [Version]
 #		 [Res]  Map resolution: 1-8
 #		[Type]  Map image type: sat, top
-#	     [Version]  Desired DayZ Version (e.g. 1.19.0)
+#    [Version]  Desired DayZ Version (e.g. 1.19.0)
 
 RES=$1
 TYP=$2
@@ -139,21 +139,22 @@ cd tmp
 
 
 # If resolution is 8, saving each tile at 256x256 resolution will cause an error when we concatenate, as the max JPG size is 65500. 
-# So, we check if the resolution is 8, and if so resize each tile to 254x254 BEFORE concatenating.
+# So, we check if the resolution is 8, and if so, resize each tile to 254x254 BEFORE concatenating.
 if [ $RES -ge 8 ]
 then
 	printf "Resizing tiles prior to concatenation to avoid .JPG 65500 max overshoot.\n"
 	mogrify -resize 254x254 -format jpg *.jpg
 	printf "Resizing complete.\n"
+	printf "Generating map from tiles- this will take a VERY long time (resolution 8)\n"
+else
+	printf "Generating map from tiles. This may take a while.\n"
 fi
 
-printf "Generating map from tiles. This may take a while.\n"
 
 # This presupposes the user has at least 10 GB of RAM. If they do not, ImageMagick will throw a "memory allocation failed" error.
-montage -limit area 0 -limit memory 10GB -limit map 10GB -monitor -mode concatenate *_*.jpg -tile "${TOT}x${TOT}" "DayZ_${3}_Chernarus_Map_${TOT}x${TOT}_${2}.jpg"
+montage -verbose -limit area 0 -limit memory 10GB -limit map 10GB -monitor -mode concatenate *_*.jpg -tile "${TOT}x${TOT}" "DayZ_${3}_Chernarus_Map_${TOT}x${TOT}_${2}.jpg"
 
-printf "\nMap generation complete! Opening image (saved in maps folder)\n"
-
+printf "\nMap generation complete! Opening image.\n"
 
 
 mv "DayZ_${3}_Chernarus_Map_${TOT}x${TOT}_${2}.jpg" ../maps
