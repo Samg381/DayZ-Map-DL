@@ -158,14 +158,8 @@ mv "DayZ_${3}_Chernarus_Map_${TOT}x${TOT}_${2}.jpg" ../maps
 
 cd ../maps
 
-
-# Check OS and open photo accordingly
-if [[ $(uname -o) == "MINGW64_NT-10.0" ]]; then
-  explorer "DayZ_${3}_Chernarus_Map_${TOT}x${TOT}_${2}.jpg"
-else
-  eog "DayZ_${3}_Chernarus_Map_${TOT}x${TOT}_${2}.jpg"
-fi
-
+# Check if explorer (Windows) is available and open newly created image. If not, use eog
+explorer "DayZ_${3}_Chernarus_Map_${TOT}x${TOT}_${2}.jpg" || eog "DayZ_${3}_Chernarus_Map_${TOT}x${TOT}_${2}.jpg"
 
 cd ..
 
