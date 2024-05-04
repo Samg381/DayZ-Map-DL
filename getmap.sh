@@ -148,17 +148,24 @@ fi
 
 printf "Generating map from tiles. This may take a while.\n"
 
-montage -monitor -mode concatenate *_*.jpg -tile "${TOT}x${TOT}" "DayZ_Chernarus_${TOT}x${TOT}_${2}_${3}.jpg"
+montage -monitor -mode concatenate *_*.jpg -tile "${TOT}x${TOT}" "DayZ_${3}_Chernarus_Map_${TOT}x${TOT}_${2}.jpg"
 
-printf "Map generation complete! Opening image (saved in maps folder)\n"
+printf "\nMap generation complete! Opening image (saved in maps folder)\n\n"
 
 
 
-mv "DayZ_Chernarus_${TOT}x${TOT}_${2}_${3}.jpg" ../maps
+mv "DayZ_${3}_Chernarus_Map_${TOT}x${TOT}_${2}.jpg" ../maps
 
 cd ../maps
 
-explorer.exe "DayZ_Chernarus_${TOT}x${TOT}_${2}_${3}.jpg"
+
+# Check OS and open photo accordingly
+if [[ $(uname -o) == "MINGW64_NT-10.0" ]]; then
+  explorer "DayZ_${3}_Chernarus_Map_${TOT}x${TOT}_${2}.jpg"
+else
+  eog "DayZ_${3}_Chernarus_Map_${TOT}x${TOT}_${2}.jpg"
+fi
+
 
 cd ..
 
