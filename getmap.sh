@@ -148,7 +148,7 @@ fi
 
 printf "Generating map from tiles. This may take a while.\n"
 
-montage -monitor -mode concatenate *_*.jpg -tile "${TOT}x${TOT}" "DayZ_${3}_Chernarus_Map_${TOT}x${TOT}_${2}.jpg"
+montage -limit area 0  -monitor -mode concatenate *_*.jpg -tile "${TOT}x${TOT}" "DayZ_${3}_Chernarus_Map_${TOT}x${TOT}_${2}.jpg"
 
 printf "\nMap generation complete! Opening image (saved in maps folder)\n\n"
 
