@@ -5,7 +5,7 @@
 # Usage: ./getmap [Res] [Type] [Version]
 #		 [Res]  Map resolution: 1-8
 #		[Type]  Map image type: sat, top
-#	     [Version]  Desired DayZ Version (e.g. 1.19.0)
+#    [Version]  Desired DayZ Version (e.g. 1.19.0)
 
 RES=$1
 TYP=$2
@@ -41,6 +41,7 @@ elif [ $RES == 7 ]; then
 elif [ $RES == 8 ]; then
 	SIZE=255
 	printf "Warning! You have selected 8x resolution- This will create a FOUR GIGAPIXEL (65000x65000px) image. This will take a while!\n"
+	printf "Processing images of this size is prone to failure. If you encounter errors, please check imagemagick config in /etc/imagemagick/policy.xml.\n"
 else
 	printf "Please specify a valid resolution (1-8) ( ex: ./getmap 4 sat )\n"
 	exit;
@@ -121,7 +122,7 @@ done
 
 printf "Done.\nInitiating download (this may take a while)\n"
 
-aria2c --dir=./tmp --input-file=TilesToDownload.txt --max-tries=0 --retry-wait=3 --timeout=5 --max-concurrent-downloads=400 --connect-timeout=60 --max-connection-per-server=16 --split=16 --min-split-size=1M --download-result=full --file-allocation=none
+aria2c --dir=./tmp --input-file=TilesToDownload.txt --auto-file-renaming=false --allow-overwrite=false --max-tries=0 --retry-wait=3 --timeout=5 --max-concurrent-downloads=400 --connect-timeout=60 --max-connection-per-server=16 --split=16 --min-split-size=1M --download-result=full
 
 # max-concurrent-downloads (getmap 7 sat) speed tests:
 # 300: 1:13
@@ -148,9 +149,10 @@ fi
 
 printf "Generating map from tiles. This may take a while.\n"
 
-montage -limit area 0  -monitor -mode concatenate *_*.jpg -tile "${TOT}x${TOT}" "DayZ_${3}_Chernarus_Map_${TOT}x${TOT}_${2}.jpg"
+# This presupposes the user has at least 10 GB of RAM. If they do not, ImageMagick will throw a "memory allocation failed" error.
+montage -limit area 0 -limit memory 10GB -limit map 10GB -monitor -mode concatenate *_*.jpg -tile "${TOT}x${TOT}" "DayZ_${3}_Chernarus_Map_${TOT}x${TOT}_${2}.jpg"
 
-printf "\nMap generation complete! Opening image (saved in maps folder)\n\n"
+printf "\nMap generation complete! Opening image (saved in maps folder)\n"
 
 
 
@@ -159,8 +161,14 @@ mv "DayZ_${3}_Chernarus_Map_${TOT}x${TOT}_${2}.jpg" ../maps
 cd ../maps
 
 # Check if explorer (Windows) is available and open newly created image. If not, use eog
-explorer "DayZ_${3}_Chernarus_Map_${TOT}x${TOT}_${2}.jpg" || eog "DayZ_${3}_Chernarus_Map_${TOT}x${TOT}_${2}.jpg"
+explorer "DayZ_${3}_Chernarus_Map_${TOT}x${TOT}_${2}.jpg" || eog "DayZ_${3}_Chernarus_Map_${TOT}x${TOT}_${2}.jpg" || xdg-open "DayZ_${3}_Chernarus_Map_${TOT}x${TOT}_${2}.jpg"
 
 cd ..
 
-rm -r -f tmp
+
+if [ $RES -ge 8 ]
+then
+	printf "Since Res [8] was selected, skipping deletion of /tmp directory to avoid re-download if re-run is necessary. Feel free to delete /tmp if you are satisfied with image.\n\n"
+else
+	rm -r -f tmp
+fi
