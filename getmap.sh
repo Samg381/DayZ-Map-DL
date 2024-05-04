@@ -5,7 +5,7 @@
 # Usage: ./getmap [Res] [Type] [Version]
 #		 [Res]  Map resolution: 1-8
 #		[Type]  Map image type: sat, top
-#    [Version]  Desired DayZ Version (e.g. 1.19.0)
+#	     [Version]  Desired DayZ Version (e.g. 1.19.0)
 
 RES=$1
 TYP=$2
@@ -122,7 +122,7 @@ done
 
 printf "Done.\nInitiating download (this may take a while)\n"
 
-aria2c --dir=./tmp --input-file=TilesToDownload.txt --auto-file-renaming=false --allow-overwrite=false --max-tries=0 --retry-wait=3 --timeout=5 --max-concurrent-downloads=400 --connect-timeout=60 --max-connection-per-server=16 --split=16 --min-split-size=1M --download-result=full
+aria2c --dir=./tmp --input-file=TilesToDownload.txt -c --auto-file-renaming=false --allow-overwrite=false --max-tries=0 --retry-wait=3 --timeout=5 --max-concurrent-downloads=400 --connect-timeout=60 --max-connection-per-server=16 --split=16 --min-split-size=1M --download-result=full
 
 # max-concurrent-downloads (getmap 7 sat) speed tests:
 # 300: 1:13
