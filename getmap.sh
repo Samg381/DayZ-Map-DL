@@ -2,14 +2,27 @@
 
 # DayZ ChernarusPlus Map Downloader
 # Created by Samg381 | samg381.com
-# Usage: ./getmap [Res] [Type]
+# Usage: ./getmap [Res] [Type] [Version]
 #		 [Res]  Map resolution: 1-8
 #		[Type]  Map image type: sat, top
+#	     [Version]  Desired DayZ Version (e.g. 1.19.0)
 
 RES=$1
 TYP=$2
+VER=$3
 
-printf "Downloading $TYP map at ${RES}x resolution.\n"
+
+if [ $# -eq 3 ] 
+then
+    printf "\nDayZ ChernarusPlus Map Downloader by Samg381 | samg381.com\n\n"
+else
+    echo "Invalid arguments. Please check documentation."
+    echo "Example usage: ./getmap.sh [Res (1-8)] [Type (sat/top)] [Version (e.g. 1.19.0)]"
+    exit
+fi
+
+
+printf "Downloading $TYP map at ${RES}x resolution.\n\n\n"
 
 if [ $RES == 1 ]; then
 	SIZE=1
@@ -62,16 +75,16 @@ do
 		yFileName=$(printf "%03d" $y)
 	
 		
-		# echo https://maps.izurvive.com/maps/ChernarusPlus-Top/1.19.0/tiles/"$RES"/"$x"/"$y".jpg | xargs wget -O "${yFileName}_${xFileName}.jpg" > /dev/null 2>&1
+		# echo https://maps.izurvive.com/maps/ChernarusPlus-Top/"$VER"/tiles/"$RES"/"$x"/"$y".jpg | xargs wget -O "${yFileName}_${xFileName}.jpg" > /dev/null 2>&1
 		
-		# aria2c -x 16 -o "${yFileName}_${xFileName}.jpg" https://maps.izurvive.com/maps/ChernarusPlus-Top/1.19.0/tiles/"$RES"/"$x"/"$y".jpg > /dev/null 2>&1
+		# aria2c -x 16 -o "${yFileName}_${xFileName}.jpg" https://maps.izurvive.com/maps/ChernarusPlus-Top/"$VER"/tiles/"$RES"/"$x"/"$y".jpg > /dev/null 2>&1
 		
 		
 		if [ $2 == "top" ]; then
-			echo https://maps.izurvive.com/maps/ChernarusPlus-Top/1.19.0/tiles/"$RES"/"$x"/"$y".jpg >> TilesToDownload.txt
+			echo https://maps.izurvive.com/maps/ChernarusPlus-Top/"$VER"/tiles/"$RES"/"$x"/"$y".jpg >> TilesToDownload.txt
 			echo "	out=${yFileName}_${xFileName}.jpg" >> TilesToDownload.txt
 		elif [ $2 == "sat" ]; then
-			echo https://maps.izurvive.com/maps/ChernarusPlus-Sat/1.19.0/tiles/"$RES"/"$x"/"$y".jpg >> TilesToDownload.txt
+			echo https://maps.izurvive.com/maps/ChernarusPlus-Sat/"$VER"/tiles/"$RES"/"$x"/"$y".jpg >> TilesToDownload.txt
 			echo "	out=${yFileName}_${xFileName}.jpg" >> TilesToDownload.txt
 		else
 			printf "Please specify satellite / topographic (sat/top) ( ex: ./getmap 4 sat )\n"
@@ -135,18 +148,17 @@ fi
 
 printf "Generating map from tiles. This may take a while.\n"
 
-montage -monitor -mode concatenate *_*.jpg -tile "${TOT}x${TOT}" "${TOT}x${TOT}_${2}.jpg"
+montage -monitor -mode concatenate *_*.jpg -tile "${TOT}x${TOT}" "DayZ_Chernarus_${TOT}x${TOT}_${2}_${3}.jpg"
 
 printf "Map generation complete! Opening image (saved in maps folder)\n"
 
 
 
-
-mv "${TOT}x${TOT}_${2}.jpg" ../maps
+mv "DayZ_Chernarus_${TOT}x${TOT}_${2}_${3}.jpg" ../maps
 
 cd ../maps
 
-explorer.exe "${TOT}x${TOT}_${2}.jpg"
+explorer.exe "DayZ_Chernarus_${TOT}x${TOT}_${2}_${3}.jpg"
 
 cd ..
 
