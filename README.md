@@ -21,4 +21,4 @@ Downloads the latest Chernarus+ Map from iZurvive. Choose between resolution inc
 
 Filesize grows exponentially as [Res] increases. The highest resolution setting, 8, will generate a TWO GIGAPIXEL image.
 
-This tool is best used on a powerful system with a strong internet connection.
+This tool is best used on a powerful system with a strong internet connection. **An NVMe SSD is strongly recommended.**
