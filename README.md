@@ -9,7 +9,9 @@ Downloads the latest Chernarus+ Map from iZurvive. Choose between resolution inc
 
 # Usage
 
-`./getmap [Res] [Type] [Version]`
+`./getmap [Map] [Res] [Type] [Version]`
+
+[Map] Map name: chernarus, livonia (case sensitive - all lowercase)
 
 [Res]  Map resolution: 1-8
 
