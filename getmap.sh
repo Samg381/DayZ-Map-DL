@@ -27,8 +27,8 @@ else
 	printf "Note: Some maps may not have tiles for the latest DayZ version.\n"
 	printf "      e.g: DayZ game is 1.25, but iZurive only has Livonia version 1.19 available\n\n"
 	
-	printf "Example: ./getmap.sh chernarus 6 sat 1.25\n"
-	printf "Example: ./getmap.sh livonia 4 sat 1.19\n"
+	printf "Example: ./getmap.sh chernarus 6 sat 1.25.0\n"
+	printf "Example: ./getmap.sh livonia 4 sat 1.19.0\n"
 	
 	printf "\n\n"
 	
