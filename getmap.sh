@@ -7,17 +7,31 @@
 #		[Type]  Map image type: sat, top
 #    [Version]  Desired DayZ Version (e.g. 1.19.0)
 
-RES=$1
-TYP=$2
-VER=$3
+MAP=$1
+RES=$2
+TYP=$3
+VER=$4
 
-
-if [ $# -eq 3 ] 
+if [ $# -eq 4 ] 
 then
     printf "\nDayZ ChernarusPlus Map Downloader by Samg381 | samg381.com\n\n"
 else
-    echo "Invalid arguments. Please check documentation."
-    echo "Example usage: ./getmap.sh [Res (1-8)] [Type (sat/top)] [Version (e.g. 1.19.0)]"
+
+    printf "\nInvalid arguments. Please see below usage:\n\n"
+	
+    printf "Usage: ./getmap.sh [Map (chernarus, livonia)] [Res (1-8)] [Type (sat/top)] [Version (e.g. 1.19.0)]\n\n"
+	
+	
+	printf "Note: Version numbers must be exact (e.g. '1.19.0' not '1.19')\n"
+	printf "Note: Arguments are case sensitive (e.g 'top' not 'Top')\n"
+	printf "Note: Some maps may not have tiles for the latest DayZ version.\n"
+	printf "      e.g: DayZ game is 1.25, but iZurive only has Livonia version 1.19 available\n\n"
+	
+	printf "Example: ./getmap.sh chernarus 6 sat 1.25\n"
+	printf "Example: ./getmap.sh livonia 4 sat 1.19\n"
+	
+	printf "\n\n"
+	
     exit
 fi
 
@@ -81,14 +95,28 @@ do
 		# aria2c -x 16 -o "${yFileName}_${xFileName}.jpg" https://maps.izurvive.com/maps/ChernarusPlus-Top/"$VER"/tiles/"$RES"/"$x"/"$y".jpg > /dev/null 2>&1
 		
 		
-		if [ $2 == "top" ]; then
-			echo https://maps.izurvive.com/maps/ChernarusPlus-Top/"$VER"/tiles/"$RES"/"$x"/"$y".jpg >> TilesToDownload.txt
-			echo "	out=${yFileName}_${xFileName}.jpg" >> TilesToDownload.txt
-		elif [ $2 == "sat" ]; then
-			echo https://maps.izurvive.com/maps/ChernarusPlus-Sat/"$VER"/tiles/"$RES"/"$x"/"$y".jpg >> TilesToDownload.txt
-			echo "	out=${yFileName}_${xFileName}.jpg" >> TilesToDownload.txt
+		if [ $TYP == "top" ]; then
+			if [ $MAP == "chernarus" ]; then
+				echo https://maps.izurvive.com/maps/ChernarusPlus-Top/"$VER"/tiles/"$RES"/"$x"/"$y".jpg >> TilesToDownload.txt
+				echo "	out=${yFileName}_${xFileName}.jpg" >> TilesToDownload.txt
+			elif [ $MAP == "livonia" ]; then
+				echo https://maps.izurvive.com/maps/Livonia-Top/"$VER"/tiles/"$RES"/"$x"/"$y".jpg >> TilesToDownload.txt
+				echo "	out=${yFileName}_${xFileName}.jpg" >> TilesToDownload.txt
+			else
+				printf "\nCheck map name parameter (chernarus, livonia) (case sensitive!)\n"
+			fi
+		elif [ $TYP == "sat" ]; then
+			if [ $MAP == "chernarus" ]; then
+				echo https://maps.izurvive.com/maps/ChernarusPlus-Sat/"$VER"/tiles/"$RES"/"$x"/"$y".jpg >> TilesToDownload.txt
+				echo "	out=${yFileName}_${xFileName}.jpg" >> TilesToDownload.txt
+			elif [ $MAP == "livonia" ]; then
+				echo https://maps.izurvive.com/maps/Livonia-Sat/"$VER"/tiles/"$RES"/"$x"/"$y".jpg >> TilesToDownload.txt
+				echo "	out=${yFileName}_${xFileName}.jpg" >> TilesToDownload.txt
+			else
+				printf "\nCheck map name parameter (chernarus, livonia) (case sensitive!)\n"
+			fi
 		else
-			printf "Please specify satellite / topographic (sat/top) ( ex: ./getmap 4 sat )\n"
+			printf "\nCheck map type parameter (sat, top) (case sensitive!)\n"
 			exit;
 		fi
 	
@@ -152,17 +180,18 @@ fi
 
 
 # This presupposes the user has at least 10 GB of RAM. If they do not, ImageMagick will throw a "memory allocation failed" error.
-montage -verbose -limit area 0 -limit memory 10GB -limit map 10GB -monitor -mode concatenate *_*.jpg -tile "${TOT}x${TOT}" "DayZ_${3}_Chernarus_Map_${TOT}x${TOT}_${2}.jpg"
+montage -verbose -limit area 0 -limit memory 10GB -limit map 10GB -monitor -mode concatenate *_*.jpg -tile "${TOT}x${TOT}" "DayZ_${VER}_${MAP}_map_${TOT}x${TOT}_${TYP}.jpg"
+
 
 printf "\nMap generation complete! Opening image.\n"
 
 
-mv "DayZ_${3}_Chernarus_Map_${TOT}x${TOT}_${2}.jpg" ../maps
+mv "DayZ_${VER}_${MAP}_map_${TOT}x${TOT}_${TYP}.jpg" ../maps
 
 cd ../maps
 
 # Check if explorer (Windows) is available and open newly created image. If not, use eog
-explorer "DayZ_${3}_Chernarus_Map_${TOT}x${TOT}_${2}.jpg" || eog "DayZ_${3}_Chernarus_Map_${TOT}x${TOT}_${2}.jpg" || xdg-open "DayZ_${3}_Chernarus_Map_${TOT}x${TOT}_${2}.jpg"
+explorer "DayZ_${VER}_${MAP}_map_${TOT}x${TOT}_${TYP}.jpg" || eog "DayZ_${VER}_${MAP}_map_${TOT}x${TOT}_${TYP}.jpg" || xdg-open "DayZ_${VER}_${MAP}_map_${TOT}x${TOT}_${TYP}.jpg"
 
 cd ..
 
