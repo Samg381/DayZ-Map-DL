@@ -5,7 +5,10 @@ Downloads the latest Chernarus+ Map from iZurvive. Choose between resolution inc
 
 # Prerequisites
 
-`aria2c` `ImageMagick` `g++`
+- GNU/Linux (Tested on Debian 12, CentOS 7, WSL Debian 12)
+- `aria2c`
+- `ImageMagick`
+- `g++`
 
 # Usage
 
@@ -30,3 +33,5 @@ _Example:_ `./getmap.sh livonia 4 sat 1.19.0`
 Filesize grows exponentially as [Res] increases. The highest resolution setting, 8, will generate a TWO GIGAPIXEL image.
 
 This tool is best used on a powerful system with a strong internet connection. **An NVMe SSD is strongly recommended.**
+
+# 
