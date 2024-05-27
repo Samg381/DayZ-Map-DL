@@ -19,6 +19,12 @@ Downloads the latest Chernarus+ Map from iZurvive. Choose between resolution inc
 
 [Version] Desired DayZ map version (must be exact, e.g. 1.19.0)
 
+--
+
+_Example:_ `./getmap.sh chernarus 6 sat 1.25.0`
+
+_Example:_ `./getmap.sh livonia 4 sat 1.19.0`
+
 # Warning
 
 Filesize grows exponentially as [Res] increases. The highest resolution setting, 8, will generate a TWO GIGAPIXEL image.
