@@ -9,13 +9,21 @@ Downloads the latest Chernarus+ Map from iZurvive. Choose between resolution inc
 
 # Usage
 
-`./getmap [Res] [Type] [Version]`
+`./getmap [Map] [Res] [Type] [Version]`
+
+[Map] Map name: chernarus, livonia (case sensitive - all lowercase)
 
 [Res]  Map resolution: 1-8
 
 [Type] Map image type: sat (satellite), top (topographic)
 
 [Version] Desired DayZ map version (must be exact, e.g. 1.19.0)
+
+--
+
+_Example:_ `./getmap.sh chernarus 6 sat 1.25.0`
+
+_Example:_ `./getmap.sh livonia 4 sat 1.19.0`
 
 # Warning
 
