@@ -1,5 +1,6 @@
 # Chernarus+ Map Downloader
-Downloads the latest Chernarus+ Map from iZurvive. Choose between resolution incriments from 1-8.
+Downloads the latest Chernarus+ or Livonia Map from iZurvive / DayZDB / Dayz.GG 
+Choose between Satellite and Topographic maps, at resolutions increasing by incriments from 1-8
 
 ![Animation](https://user-images.githubusercontent.com/3127698/208580587-369eb715-0002-4da2-9047-1493bee4ebf7.gif)
 
