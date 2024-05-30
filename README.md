@@ -1,7 +1,7 @@
 # Chernarus+ Map Downloader
-Downloads a .jpg of the latest Chernarus+ or Livonia Map from iZurvive / DayZDB / Dayz.GG 
+Generates a .jpg of the latest Chernarus+ or Livonia Map from the iZurvive / Dayz.GG website
 
-Choose between Satellite and Topographic format, at resolutions increasing by incriments from 1-8
+Choose between Satellite and Topographic format, at a specified game version, at resolutions increasing by incriments from 1-8
 
 ![Animation](https://user-images.githubusercontent.com/3127698/208580587-369eb715-0002-4da2-9047-1493bee4ebf7.gif)
 
@@ -18,7 +18,7 @@ Choose between Satellite and Topographic format, at resolutions increasing by in
 
 [Map] Map name: chernarus, livonia (case sensitive - all lowercase)
 
-[Res]  Map resolution: 1-8
+[Res]  Map resolution: 1-8 (8 is largest - HUGE image - see Warning below)
 
 [Type] Map image type: sat (satellite), top (topographic)
 
@@ -26,9 +26,13 @@ Choose between Satellite and Topographic format, at resolutions increasing by in
 
 --
 
-_Example:_ `./getmap.sh chernarus 6 sat 1.25.0`
+### _Examples:_
 
-_Example:_ `./getmap.sh livonia 4 sat 1.19.0`
+`./getmap.sh chernarus 6 sat 1.23.0` (_Downlolads a satellite map of Chernarus+ from DayZ game version 1.23.0 at resolution 6_)
+
+`./getmap.sh chernarus 8 top 1.25.0` (_Downlolads a topographic map of Chernarus+ from DayZ game version 1.25.0 at resolution 8_)
+
+`./getmap.sh livonia 4 sat 1.19.0` (_Downlolads a satellite map of Livonia from DayZ game version 1.19.0 at resolution 4_)
 
 # Warning
 
