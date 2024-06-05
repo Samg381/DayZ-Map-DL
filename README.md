@@ -1,7 +1,7 @@
 # Chernarus+ Map Downloader
 Generates a .jpg of the latest Chernarus+ or Livonia Map from the iZurvive / Dayz.GG website
 
-Choose between Satellite and Topographic format, at a specified game version, at resolutions increasing by incriments from 1-8
+Choose between Satellite and Topographic format, for either Chernarus+ or Livonia, at a specified game version, with a specified resolution increasing from 1-8
 
 ![Animation](https://user-images.githubusercontent.com/3127698/208580587-369eb715-0002-4da2-9047-1493bee4ebf7.gif)
 
